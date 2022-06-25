@@ -1,0 +1,153 @@
+// 0 0 7 Game
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <windows.h>
+#include "header.h"
+
+int tablo(int pcephane,int ccephane,int pkalkan,int ckalkan);
+
+int main(){
+    srand(time(NULL));
+    int pcephane=1,ccephane=1,i; //p player c computer
+    int pkalkan=3,ckalkan=3;
+    char player,computer;
+
+    Title();
+
+    do{
+        printf("\n%30.d(M)ermi Doldurma");
+        printf("\n%30.d(K)alkan");
+        printf("\n%30.d(A)tes Etme\n");
+        printf("%30.d:\n");
+
+        player = getch();
+        for(i=0;i<3;i++)
+            Beep(1000, 400),Sleep(100);
+        
+        if(player>=97 && player<=122)
+            player -= 32; 
+
+        computer = rand() % 3;
+        // 0 = mermi 1 = kalkan 2 = ates
+    
+        if(player == 'M' && computer == 0){
+            BulletBullet();
+            pcephane++,ccephane++;
+            pkalkan=3,ckalkan=3;
+            tablo(pcephane,ccephane,pkalkan,ckalkan);}
+        
+        else if(player == 'M' && computer == 1){
+            BulletShield();
+            if(ckalkan == 0)
+                tablo(pcephane,ccephane,pkalkan,ckalkan);
+            
+            else{
+                pcephane++;
+                pkalkan=3;
+                ckalkan--;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}
+            
+        else if(player == 'M' && computer == 2){
+        
+            BulletFire();
+            if(ccephane == 0)
+                printf("Mermi yok.....");
+            
+            else{
+            printf("Bilgisayar Kazandi.");
+            break;}}
+
+        else if(player == 'K' && computer == 0){
+            ShieldBullet();
+            if(pkalkan==0){
+                printf("Kalkan Yok...\n");
+                ccephane++;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}
+            
+            else{
+                pkalkan--;
+                ccephane++;
+                ckalkan=3;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}
+            
+        else if(player == 'K' && computer == 1){
+        
+            ShieldShield();
+            if(pkalkan==0 || ckalkan ==0){
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}
+
+            else{
+            
+                pkalkan--;
+                ckalkan--;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}
+            
+        else if(player == 'K' && computer == 2){
+            ShieldFire();
+            if(pkalkan == 0 && ccephane !=0){
+                printf("Bilgisayar kazandi...");
+                break;}
+            
+            else if(pkalkan == 0 && ccephane ==0){
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}
+
+            else if(pkalkan != 0 && ccephane ==0){
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}
+            
+            else{
+            
+                pkalkan--;
+                ckalkan = 3;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}
+            
+        else if(player == 'A' && computer == 1){
+            FireShield();
+            if(pcephane ==0 )
+                tablo(pcephane,ccephane,pkalkan,ckalkan);
+            
+            else if(ckalkan ==0){
+                printf("Kazandiniz......");
+                break;}
+            
+            else{
+                pcephane--;
+                pkalkan=3;
+                ckalkan--;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}
+
+        else if(player == 'A' && computer == 0){
+            FireBullet();
+            if(pcephane ==0)
+                tablo(pcephane,ccephane,pkalkan,ckalkan);
+            else{
+            
+                printf("Kazandiniz.");
+                break;}}
+
+        else if(player == 'A' && computer == 2){
+            FireFire();
+            if(ccephane == 0 && pcephane == 0)
+                tablo(pcephane,ccephane,pkalkan,ckalkan);
+                
+            else if(ccephane == 0){
+                printf("Kazandiniz....");
+                break;}
+            
+            else if(pcephane ==0){
+                printf("Bilgisayar kazandi...");
+                break;}
+            
+            else{
+                ccephane--,pcephane--;
+                ckalkan = 3,pkalkan =3;
+                tablo(pcephane,ccephane,pkalkan,ckalkan);}}}
+    while(1);
+    return 0;}
+int tablo(int pcephane,int ccephane,int pkalkan,int ckalkan){
+            printf("%10.dPlayer"),printf("%30.dcomputer\n");
+            printf("%10.d"),printf("Cephane:\t%d",pcephane);
+            printf("%20.d"),printf(" Cephane:\t\t%d\n",ccephane);
+            printf("%10.d"),printf("KalkanHakki:\t%d",pkalkan);
+            printf("%20.d"),printf(" KalkanHakki:\t%d\n",ckalkan);}
